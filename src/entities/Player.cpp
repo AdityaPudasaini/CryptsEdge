@@ -76,6 +76,9 @@ void Player::updatePosition(float timePassed) {
     }
 }
 
+sf::FloatRect Player::getHitbox() {
+    return sf::FloatRect ({position.x, position.y}, {50.f, 50.f});
+}
 
 void Player::draw(sf::RenderWindow& window) {
 
