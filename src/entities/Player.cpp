@@ -57,3 +57,25 @@ void Player::jump() {
     velocity.y = - 20.f;
     isOnGround = false;
 }
+
+void Player::updatePosition(float timePassed) {
+    float gravity = 15.f;    
+    velocity.y += gravity * timePassed;
+
+    position.y += velocity.y;
+    position.x = velocity.x;
+    
+    if(position.y >= 900.f) {
+        position.y = 900.f;
+        velocity.y = 0.f;
+        isOnGround = true;
+    }
+}
+
+void Player::draw(sf::RenderWindow& window) {
+
+    sf::RectangleShape shape({50.f, 50.f});
+    shape.setFillColor(sf::Color::Red);
+    shape.setPosition(position);
+    window.draw(shape);
+}
