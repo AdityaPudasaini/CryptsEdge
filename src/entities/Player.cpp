@@ -43,27 +43,31 @@ void Player::handleInput() {
     }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::J)) {
-        meleeAttack();
+        //meleeAttack();
         currentState =  AnimationState::Attacking;
     }
 
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::K)) {
-        rangedAttack();
+        //rangedAttack();
         currentState =  AnimationState::Attacking;
     }
 }
 
+Player::~Player() {
+
+}
+
 void Player::jump() {
-    velocity.y = - 20.f;
+    velocity.y = - 10.f;
     isOnGround = false;
 }
 
 void Player::updatePosition(float timePassed) {
-    float gravity = 15.f;    
+    float gravity = 20.f;    
     velocity.y += gravity * timePassed;
 
     position.y += velocity.y;
-    position.x = velocity.x;
+    position.x += velocity.x;
     
     if(position.y >= 900.f) {
         position.y = 900.f;
@@ -71,6 +75,7 @@ void Player::updatePosition(float timePassed) {
         isOnGround = true;
     }
 }
+
 
 void Player::draw(sf::RenderWindow& window) {
 
