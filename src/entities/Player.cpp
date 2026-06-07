@@ -43,12 +43,12 @@ void Player::handleInput() {
     }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::J)) {
-        //meleeAttack();
+        meleeAttack();
         currentState =  AnimationState::Attacking;
     }
 
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::K)) {
-        //rangedAttack();
+        rangedAttack();
         currentState =  AnimationState::Attacking;
     }
 }
@@ -78,6 +78,26 @@ void Player::updatePosition(float timePassed) {
 
 sf::FloatRect Player::getHitbox() {
     return sf::FloatRect ({position.x, position.y}, {50.f, 50.f});
+}
+
+void Player::damageTaken(float damageAmount) {
+    health -= damageAmount;
+    currentState = AnimationState::Hurt;
+
+    if(health <= 0) {
+        currentState = AnimationState::Dead;
+    }
+}
+
+void Player::meleeAttack() {
+    std::cout << "Melee attack!" << std::endl;
+}
+
+void Player::rangedAttack() {
+    if(mana >= 10.f) {
+        mana -= 10.f;
+        std::cout << "Ranged attack! Mana: " << mana << std::endl;
+    }
 }
 
 void Player::draw(sf::RenderWindow& window) {

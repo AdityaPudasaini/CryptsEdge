@@ -1,7 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <string>
- #include <optional>
+#include <optional>
+#include <iostream>
 
 class Player
 {
