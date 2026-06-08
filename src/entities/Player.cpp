@@ -1,7 +1,7 @@
 #include "Player.hpp"
 
 Player::Player() {
-    position = sf::Vector2f(100.f, 700.f);
+    position = sf::Vector2f(100.f, 912.f);
     velocity = sf::Vector2f(0.f, 0.f);
     health = 100.f;
     isOnGround = true;
@@ -128,8 +128,8 @@ void Player::updatePosition(float timePassed) {
     position.y += velocity.y;
     position.x += velocity.x;
     
-    if(position.y >= 700.f) {
-        position.y = 700.f;
+    if(position.y >= 912.f) {
+        position.y = 912.f;
         velocity.y = 0.f;
         isOnGround = true;
     }
