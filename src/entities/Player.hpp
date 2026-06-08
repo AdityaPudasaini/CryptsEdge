@@ -28,6 +28,7 @@ class Player
         AnimationState currentState;
 
         std::map<AnimationState, sf::Texture> textures;
+        std::map<AnimationState, int> totalFrames;
         std::optional<sf::Sprite> sprite;
 
     public:
@@ -41,6 +42,8 @@ class Player
         void handleInput();
 
         void updatePosition(float timePassed);
+
+        void updateAnimation();
 
         void jump();
 

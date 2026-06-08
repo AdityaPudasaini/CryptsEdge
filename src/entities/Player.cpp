@@ -18,6 +18,15 @@ Player::Player() {
     textures[AnimationState::Hurt].loadFromFile("./assets/sprites/player/hero_knight/Hurt.png");
     textures[AnimationState::Dead].loadFromFile("./assets/sprites/player/hero_knight/Death.png");
 
+    totalFrames[AnimationState::Idle] = 11;
+    totalFrames[AnimationState::Running] = 8;
+    totalFrames[AnimationState::Attacking1] = 7;
+    totalFrames[AnimationState::Attacking2] = 7;
+    totalFrames[AnimationState::Jumping] = 3;
+    totalFrames[AnimationState::Falling] = 3;
+    totalFrames[AnimationState::Hurt] = 4;
+    totalFrames[AnimationState::Dead] = 11;
+
     sprite.emplace(textures[AnimationState::Idle]);
 }
 
@@ -82,6 +91,13 @@ void Player::updatePosition(float timePassed) {
         position.y = 900.f;
         velocity.y = 0.f;
         isOnGround = true;
+    }
+}
+
+void Player::updateAnimation() {
+    if(animationClock.getElapsedTime().asSeconds() >= 0.1f) {
+        currentFrameIndex++;
+        animationClock.restart();
     }
 }
 
