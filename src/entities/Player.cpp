@@ -1,7 +1,7 @@
 #include "Player.hpp"
 
 Player::Player() {
-    position = sf::Vector2f(100.f, 900.f);
+    position = sf::Vector2f(100.f, 700.f);
     velocity = sf::Vector2f(0.f, 0.f);
     health = 100.f;
     isOnGround = true;
@@ -63,21 +63,23 @@ float Player::getHealth() const {
 }
 
 void Player::handleInput() {
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
-        velocity.x = -10.f;
-        isFacingRight = false;
-        currentState =  AnimationState::Running;
-    }
+    if(!isAttacking) {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
+            velocity.x = -10.f;
+            isFacingRight = false;
+            currentState =  AnimationState::Running;
+        }
 
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
-        velocity.x = 10.f;
-        isFacingRight = true;
-        currentState =  AnimationState::Running;
-    }
+        else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+            velocity.x = 10.f;
+            isFacingRight = true;
+            currentState =  AnimationState::Running;
+        }
 
-    else{
-        velocity.x = 0.f;
-        currentState =  AnimationState::Idle;
+        else{
+            velocity.x = 0.f;
+            currentState =  AnimationState::Idle;
+        }
     }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && isOnGround == true) {
@@ -107,19 +109,19 @@ Player::~Player() {
 }
 
 void Player::jump() {
-    velocity.y = - 10.f;
+    velocity.y = - 15.f;
     isOnGround = false;
 }
 
 void Player::updatePosition(float timePassed) {
-    float gravity = 20.f;    
+    float gravity = 30.f;    
     velocity.y += gravity * timePassed;
 
     position.y += velocity.y;
     position.x += velocity.x;
     
-    if(position.y >= 900.f) {
-        position.y = 900.f;
+    if(position.y >= 700.f) {
+        position.y = 700.f;
         velocity.y = 0.f;
         isOnGround = true;
     }
@@ -171,6 +173,18 @@ void Player::meleeAttack2() {
 }
 
 void Player::draw(sf::RenderWindow& window) {
+    sprite->setOrigin({180.f / 2.f, 180.f / 2.f});
+
+    if(isFacingRight) {
+        sprite->setScale({2.f, 2.f});
+        sprite->setPosition(position);
+    } 
+    
+    else {
+        sprite->setScale({-2.f, 2.f});
+        sprite->setPosition({position.x + 180.f, position.y});
+    }
+    
     sprite->setPosition(position);
     window.draw(*sprite);
 }
