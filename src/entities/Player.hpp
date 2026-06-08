@@ -10,6 +10,7 @@ class Player
         sf::Vector2f position, velocity;
         float health, mana;
         bool isOnGround, isFacingRight;
+        sf::Clock meleeClock, rangedClock;
 
         enum class AnimationState {
             Idle,

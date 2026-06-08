@@ -90,13 +90,23 @@ void Player::damageTaken(float damageAmount) {
 }
 
 void Player::meleeAttack() {
-    std::cout << "Melee attack!" << std::endl;
+    if(meleeClock.getElapsedTime().asSeconds() >= 0.5f) {
+        std::cout << "Melee attack!" << std::endl;
+        meleeClock.restart();
+    }
 }
 
 void Player::rangedAttack() {
-    if(mana >= 10.f) {
-        mana -= 10.f;
-        std::cout << "Ranged attack! Mana: " << mana << std::endl;
+    if(rangedClock.getElapsedTime().asSeconds() >= 0.5f) {
+        if(mana >= 10.f) {
+            mana -= 10.f;
+            std::cout << "Ranged attack! Mana: " << mana << std::endl;
+        }
+
+        else {
+            std::cout << "Not enough mana" << std::endl;
+        }
+        rangedClock.restart();
     }
 }
 
