@@ -9,7 +9,7 @@ class Player
 {
     private:
         sf::Vector2f position, velocity;
-        float health, mana;
+        float health;
         bool isOnGround, isFacingRight;
         sf::Clock meleeClock, rangedClock, animationClock;
         int currentFrameIndex;
@@ -17,7 +17,10 @@ class Player
         enum class AnimationState {
             Idle,
             Running,
-            Attacking,
+            Attacking1,
+            Attacking2,
+            Jumping,
+            Falling,
             Hurt,
             Dead
         };
@@ -34,7 +37,6 @@ class Player
 
         sf::Vector2f getPosition() const;
         float getHealth() const;
-        float getMana() const;
 
         void handleInput();
 
@@ -42,9 +44,9 @@ class Player
 
         void jump();
 
-        void meleeAttack();
+        void meleeAttack1();
 
-        void rangedAttack();
+        void meleeAttack2();
 
         void damageTaken(float damageAmount);
 
