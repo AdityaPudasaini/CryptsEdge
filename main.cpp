@@ -23,6 +23,7 @@ int main() {
 
         player.handleInput();
         player.updatePosition(timePassed);
+        player.updateAnimation();
 
         window.clear();
         player.draw(window);

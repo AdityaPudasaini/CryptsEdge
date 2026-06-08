@@ -9,14 +9,37 @@ Player::Player() {
     currentState = AnimationState::Idle;
     currentFrameIndex = 0;
 
-    textures[AnimationState::Idle].loadFromFile("./assets/sprites/player/hero_knight/Idle.png");
-    textures[AnimationState::Running].loadFromFile("./assets/sprites/player/hero_knight/Run.png");
-    textures[AnimationState::Attacking1].loadFromFile("./assets/sprites/player/hero_knight/Attack1.png");
-    textures[AnimationState::Attacking2].loadFromFile("./assets/sprites/player/hero_knight/Attack2.png");
-    textures[AnimationState::Jumping].loadFromFile("./assets/sprites/player/hero_knight/Jump.png");
-    textures[AnimationState::Falling].loadFromFile("./assets/sprites/player/hero_knight/Fall.png");
-    textures[AnimationState::Hurt].loadFromFile("./assets/sprites/player/hero_knight/Hurt.png");
-    textures[AnimationState::Dead].loadFromFile("./assets/sprites/player/hero_knight/Death.png");
+    if(!textures[AnimationState::Idle].loadFromFile("./assets/sprites/player/hero_knight/Idle.png")) {
+        throw std::runtime_error("Failed to load texture for idle");
+    }
+
+    if(!textures[AnimationState::Running].loadFromFile("./assets/sprites/player/hero_knight/Run.png")) {
+        throw std::runtime_error("Failed to load texture for run");
+    }
+
+    if(!textures[AnimationState::Attacking1].loadFromFile("./assets/sprites/player/hero_knight/Attack1.png")) {
+        throw std::runtime_error("Failed to load texture for attack1");
+    }
+
+    if(!textures[AnimationState::Attacking2].loadFromFile("./assets/sprites/player/hero_knight/Attack2.png")) {
+        throw std::runtime_error("Failed to load texture for attack2");
+    }
+
+    if(!textures[AnimationState::Jumping].loadFromFile("./assets/sprites/player/hero_knight/Jump.png")) {
+        throw std::runtime_error("Failed to load texture for jump");
+    }
+
+    if(!textures[AnimationState::Falling].loadFromFile("./assets/sprites/player/hero_knight/Fall.png")) {
+        throw std::runtime_error("Failed to load texture for fall");
+    }
+
+    if(!textures[AnimationState::Hurt].loadFromFile("./assets/sprites/player/hero_knight/Hurt.png")) {
+        throw std::runtime_error("Failed to load texture for hurt");
+    }
+
+    if(!textures[AnimationState::Dead].loadFromFile("./assets/sprites/player/hero_knight/Death.png")) {
+        throw std::runtime_error("Failed to load texture for death");
+    }
 
     totalFrames[AnimationState::Idle] = 11;
     totalFrames[AnimationState::Running] = 8;
@@ -95,9 +118,18 @@ void Player::updatePosition(float timePassed) {
 }
 
 void Player::updateAnimation() {
+    sprite->setTexture(textures[currentState]);
+
     if(animationClock.getElapsedTime().asSeconds() >= 0.1f) {
         currentFrameIndex++;
         animationClock.restart();
+
+        if(currentFrameIndex >= totalFrames[currentState]) {
+            currentFrameIndex = 0;  
+        }
+
+    sprite->setTextureRect(sf::IntRect({currentFrameIndex * 180, 0}, {180, 180}));
+
     }
 }
 
@@ -129,9 +161,6 @@ void Player::meleeAttack2() {
 }
 
 void Player::draw(sf::RenderWindow& window) {
-
-    sf::RectangleShape shape({50.f, 50.f});
-    shape.setFillColor(sf::Color::Red);
-    shape.setPosition(position);
-    window.draw(shape);
+    sprite->setPosition(position);
+    window.draw(*sprite);
 }
