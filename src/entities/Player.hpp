@@ -3,6 +3,7 @@
 #include <string>
 #include <optional>
 #include <iostream>
+#include <map>
 
 class Player
 {
@@ -10,7 +11,8 @@ class Player
         sf::Vector2f position, velocity;
         float health, mana;
         bool isOnGround, isFacingRight;
-        sf::Clock meleeClock, rangedClock;
+        sf::Clock meleeClock, rangedClock, animationClock;
+        int currentFrameIndex;
 
         enum class AnimationState {
             Idle,
@@ -22,7 +24,7 @@ class Player
 
         AnimationState currentState;
 
-        sf::Texture texture;
+        std::map<AnimationState, sf::Texture> textures;
         std::optional<sf::Sprite> sprite;
 
     public:
