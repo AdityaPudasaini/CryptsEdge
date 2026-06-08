@@ -117,6 +117,14 @@ void Player::updatePosition(float timePassed) {
     float gravity = 30.f;    
     velocity.y += gravity * timePassed;
 
+    if(velocity.y > 0 && !isOnGround && !isAttacking) {
+        currentState = AnimationState::Falling;
+    }
+
+    if(isAttacking) {
+        velocity.x = 0;
+    }
+
     position.y += velocity.y;
     position.x += velocity.x;
     
@@ -167,7 +175,7 @@ void Player::meleeAttack1() {
 void Player::meleeAttack2() {
     isAttacking = true;
     if(meleeClock.getElapsedTime().asSeconds() >= 0.5f) {
-        std::cout << "Melee attack 1!" << std::endl;
+        std::cout << "Melee attack 2!" << std::endl;
         meleeClock.restart();
     }
 }
@@ -184,7 +192,7 @@ void Player::draw(sf::RenderWindow& window) {
         sprite->setScale({-2.f, 2.f});
         sprite->setPosition({position.x + 180.f, position.y});
     }
-    
+
     sprite->setPosition(position);
     window.draw(*sprite);
 }
