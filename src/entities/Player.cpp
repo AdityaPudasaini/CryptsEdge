@@ -8,6 +8,7 @@ Player::Player() {
     isFacingRight = true;
     currentState = AnimationState::Idle;
     currentFrameIndex = 0;
+    isAttacking = false;
 
     if(!textures[AnimationState::Idle].loadFromFile("./assets/sprites/player/hero_knight/Idle.png")) {
         throw std::runtime_error("Failed to load texture for idle");
@@ -51,6 +52,7 @@ Player::Player() {
     totalFrames[AnimationState::Dead] = 11;
 
     sprite.emplace(textures[AnimationState::Idle]);
+    sprite->setScale({2.f, 2.f});
 }
 
 sf::Vector2f Player::getPosition() const{
@@ -80,16 +82,23 @@ void Player::handleInput() {
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && isOnGround == true) {
         jump();
+        currentState =  AnimationState::Jumping;
     }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::J)) {
-        meleeAttack1();
-        currentState =  AnimationState::Attacking1;
+        if(!isAttacking) {
+            currentFrameIndex = 0;
+            meleeAttack1();
+            currentState =  AnimationState::Attacking1;
+        }
     }
 
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::K)) {
-        meleeAttack2();
-        currentState =  AnimationState::Attacking2;
+        if(!isAttacking) {
+            currentFrameIndex = 0;
+            meleeAttack2();
+            currentState =  AnimationState::Attacking2;
+        }
     }
 }
 
@@ -100,7 +109,6 @@ Player::~Player() {
 void Player::jump() {
     velocity.y = - 10.f;
     isOnGround = false;
-    currentState =  AnimationState::Jumping;
 }
 
 void Player::updatePosition(float timePassed) {
@@ -125,11 +133,11 @@ void Player::updateAnimation() {
         animationClock.restart();
 
         if(currentFrameIndex >= totalFrames[currentState]) {
-            currentFrameIndex = 0;  
+            currentFrameIndex = 0;
+            isAttacking = false;    
         }
 
-    sprite->setTextureRect(sf::IntRect({currentFrameIndex * 180, 0}, {180, 180}));
-
+        sprite->setTextureRect(sf::IntRect({currentFrameIndex * 180, 0}, {180, 180}));
     }
 }
 
@@ -147,6 +155,7 @@ void Player::damageTaken(float damageAmount) {
 }
 
 void Player::meleeAttack1() {
+    isAttacking = true;
     if(meleeClock.getElapsedTime().asSeconds() >= 0.5f) {
         std::cout << "Melee attack 1!" << std::endl;
         meleeClock.restart();
@@ -154,6 +163,7 @@ void Player::meleeAttack1() {
 }
 
 void Player::meleeAttack2() {
+    isAttacking = true;
     if(meleeClock.getElapsedTime().asSeconds() >= 0.5f) {
         std::cout << "Melee attack 1!" << std::endl;
         meleeClock.restart();

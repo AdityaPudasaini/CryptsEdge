@@ -10,7 +10,7 @@ class Player
     private:
         sf::Vector2f position, velocity;
         float health;
-        bool isOnGround, isFacingRight;
+        bool isOnGround, isFacingRight, isAttacking;
         sf::Clock meleeClock, rangedClock, animationClock;
         int currentFrameIndex;
 
