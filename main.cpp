@@ -27,7 +27,7 @@ int main() {
         player.updatePosition(timePassed);
         player.updateAnimation();
 
-        window.clear();
+        window.clear(sf::Color(15, 10, 25));
         room.draw(window);
         player.draw(window);
         window.display();
