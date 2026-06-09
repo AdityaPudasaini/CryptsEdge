@@ -30,3 +30,7 @@ void Room::draw(sf::RenderWindow& window) {
         }
     }
 }
+
+float Room::getFloorHeight() {
+    return 19 * 48.f;
+}

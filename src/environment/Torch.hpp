@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <optional>
 
 class Torch {
     private:
@@ -8,10 +9,12 @@ class Torch {
 
         sf::Clock animationClock;
 
-        sf::Vector2u position;
+        sf::Vector2f position;
+
+        int currentFrame;
     
     public:
-        Torch();
+        Torch(sf::Vector2f position);
 
         void update();
 
