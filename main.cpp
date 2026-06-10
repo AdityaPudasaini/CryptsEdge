@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
-#include "src/entities/Player.hpp"
-#include "src/core/Room.hpp"
+#include "src/entities/Player/Player.hpp"
+#include "src/core/Room/Room.hpp"
 #include <iostream>
 
 int main() {

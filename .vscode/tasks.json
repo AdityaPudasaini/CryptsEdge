@@ -11,9 +11,10 @@
 				"-std=c++20",
 
 				"${workspaceFolder}\\main.cpp",
-				"${workspaceFolder}\\src\\entities\\Player.cpp",
-				"${workspaceFolder}\\src\\core\\Room.cpp",
-				"${workspaceFolder}\\src\\environment\\Torch.cpp",
+				"${workspaceFolder}\\src\\entities\\Player\\Player.cpp",
+				"${workspaceFolder}\\src\\core\\Room\\Room.cpp",
+				"${workspaceFolder}\\src\\environment\\Torch\\Torch.cpp",
+				"${workspaceFolder}\\src\\entities\\Enemy\\Enemy.cpp",
 
 				"-IC:/SFML-3.1.0/include",
 				"-LC:/SFML-3.1.0/lib",
