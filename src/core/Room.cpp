@@ -6,6 +6,7 @@ Room::Room() {
     }
 
     sprite.emplace(texture);
+    sprite->setScale({4.f, 4.f});
 
     for(int col = 0; col < 40; col++) {
         tileMap[19][col] = 3;
@@ -13,10 +14,10 @@ Room::Room() {
         tileMap[21][col] = 3;
     }
 
-    torches.push_back(Torch(sf::Vector2f(300.f, 600.f)));
-    torches.push_back(Torch(sf::Vector2f(700.f, 600.f)));
-    torches.push_back(Torch(sf::Vector2f(1100.f, 600.f)));
-    torches.push_back(Torch(sf::Vector2f(1500.f, 600.f)));
+    torches.push_back(std::make_unique<Torch>(sf::Vector2f(300.f, 600.f)));
+    torches.push_back(std::make_unique<Torch>(sf::Vector2f(700.f, 600.f)));
+    torches.push_back(std::make_unique<Torch>(sf::Vector2f(1100.f, 600.f)));
+    torches.push_back(std::make_unique<Torch>(sf::Vector2f(1500.f, 600.f)));
 }
 
 void Room::draw(sf::RenderWindow& window) {
@@ -36,13 +37,14 @@ void Room::draw(sf::RenderWindow& window) {
     }
 
     for(auto& torch : torches) {
-        torch.draw(window);
+        torch->draw(window);
+        torch->update();
     }
 }
 
 void Room::update() {
     for(auto& torch : torches) {
-        torch.update();
+        torch->update();
     }
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <optional>
+#include <iostream>
 
 class Torch {
     private:
@@ -12,6 +13,9 @@ class Torch {
         sf::Vector2f position;
 
         int currentFrame;
+
+        Torch(const Torch&) = delete;
+        Torch& operator=(const Torch&) = delete;
     
     public:
         Torch(sf::Vector2f position);

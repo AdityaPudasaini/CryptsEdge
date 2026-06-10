@@ -3,7 +3,7 @@
 #include <iostream>
 #include "../environment/Torch.hpp"
 #include <vector>
-#include <SFML/System/Vector2.hpp>
+#include <memory>
 
 class Room {
     private:
@@ -11,7 +11,7 @@ class Room {
 
         sf::Texture texture;
         std::optional<sf::Sprite> sprite;
-        std::vector<Torch> torches;
+        std::vector<std::unique_ptr<Torch>> torches;
 
     public:
         Room();
