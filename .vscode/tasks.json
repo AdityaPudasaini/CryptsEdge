@@ -15,6 +15,7 @@
 				"${workspaceFolder}\\src\\core\\Room\\Room.cpp",
 				"${workspaceFolder}\\src\\environment\\Torch\\Torch.cpp",
 				"${workspaceFolder}\\src\\entities\\Enemy\\Enemy.cpp",
+				"${workspaceFolder}\\src\\entities\\Enemy\\Slime.cpp",
 
 				"-IC:/SFML-3.1.0/include",
 				"-LC:/SFML-3.1.0/lib",
