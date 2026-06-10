@@ -21,7 +21,7 @@ class Enemy {
         sf::FloatRect hitbox;
 
     public:
-        Enemy();
+        Enemy(float health, float damage, int speed, sf::Vector2f startPosition);
 
         virtual ~Enemy() = default;
 
