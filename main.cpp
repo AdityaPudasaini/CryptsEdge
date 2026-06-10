@@ -29,6 +29,7 @@ int main() {
 
         window.clear(sf::Color(15, 10, 25));
         room.draw(window);
+        room.update();
         player.draw(window);
         window.display();
     }

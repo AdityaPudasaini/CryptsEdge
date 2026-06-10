@@ -12,6 +12,11 @@ Room::Room() {
         tileMap[20][col] = 3;
         tileMap[21][col] = 3;
     }
+
+    torches.push_back(Torch(sf::Vector2f(300.f, 600.f)));
+    torches.push_back(Torch(sf::Vector2f(700.f, 600.f)));
+    torches.push_back(Torch(sf::Vector2f(1100.f, 600.f)));
+    torches.push_back(Torch(sf::Vector2f(1500.f, 600.f)));
 }
 
 void Room::draw(sf::RenderWindow& window) {
@@ -28,6 +33,16 @@ void Room::draw(sf::RenderWindow& window) {
                 window.draw(*sprite);
             }
         }
+    }
+
+    for(auto& torch : torches) {
+        torch.draw(window);
+    }
+}
+
+void Room::update() {
+    for(auto& torch : torches) {
+        torch.update();
     }
 }
 
