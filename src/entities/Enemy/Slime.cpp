@@ -63,6 +63,19 @@ void Slime::update(sf::Vector2f playerPosition) {
 }
 
 void Slime::draw(sf::RenderWindow& window) {
+    sprite->setOrigin({180.f / 2.f, 180.f / 2.f});
+
+    if(velocity.x > 0) {
+        sprite->setScale({2.f, 2.f});
+        sprite->setPosition(position);
+    } 
     
+    if(velocity.x < 0) {
+        sprite->setScale({-2.f, 2.f});
+        sprite->setPosition({position.x, position.y});
+    }
+
+    sprite->setPosition(position);
+    window.draw(*sprite);
 
 }
