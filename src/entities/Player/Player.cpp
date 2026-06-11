@@ -139,7 +139,7 @@ void Player::updateAnimation() {
     sprite->setTexture(textures[currentState]);
 
     if(animationClock.getElapsedTime().asSeconds() >= 0.1f) {
-        currentFrameIndex++;
+        currentFrameIndex++;    
         animationClock.restart();
 
         if(currentFrameIndex >= totalFrames[currentState]) {
