@@ -2,10 +2,12 @@
 #include <optional>
 #include <vector>
 #include "Enemy.hpp"
+#include <string>
 
 class Slime : public Enemy{
     private:
-        std::vector<sf::Texture> frames;
+        static std::vector<sf::Texture> frames;
+        static bool loaded;
 
         sf::Clock animationClock;
         int currentFrame;

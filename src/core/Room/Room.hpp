@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "../environment/Torch.hpp"
+#include "../../environment/Torch/Torch.hpp"
 #include <vector>
 #include <memory>
 
