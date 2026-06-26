@@ -5,14 +5,11 @@ Torch::Torch(sf::Vector2f position) {
         throw std::runtime_error("Fail to load the torch texture");
     }
 
-    std::cout << texture.getSize().x << " " << texture.getSize().y << std::endl;
-
     sprite.emplace(texture);
     sprite->setScale({3.f, 3.f});
 
     currentFrame = 0;
     sprite->setPosition(position);
-    //sprite->setTextureRect(sf::IntRect({0, 0}, {21, 27}));
 }
 
 void Torch::update() {

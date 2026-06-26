@@ -152,15 +152,19 @@ void Player::updateAnimation() {
 }
 
 sf::FloatRect Player::getHitbox() {
-    return sf::FloatRect ({position.x, position.y}, {50.f, 50.f});
+    return sf::FloatRect({position.x - 75.f, position.y - 100.f}, {150.f, 200.f});
 }
 
 void Player::damageTaken(float damageAmount) {
-    health -= damageAmount;
-    currentState = AnimationState::Hurt;
+    if(damageClock.getElapsedTime().asSeconds() >= 0.5f) {
+        health -= damageAmount;
+        currentState = AnimationState::Hurt;
 
-    if(health <= 0) {
-        currentState = AnimationState::Dead;
+        if(health <= 0) {
+            currentState = AnimationState::Dead;
+        }
+
+        damageClock.restart();
     }
 }
 

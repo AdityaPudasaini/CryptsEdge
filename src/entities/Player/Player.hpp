@@ -11,7 +11,7 @@ class Player
         sf::Vector2f position, velocity;
         float health;
         bool isOnGround, isFacingRight, isAttacking;
-        sf::Clock meleeClock, rangedClock, animationClock;
+        sf::Clock meleeClock, rangedClock, animationClock, damageClock ;
         int currentFrameIndex;
 
         enum class AnimationState {

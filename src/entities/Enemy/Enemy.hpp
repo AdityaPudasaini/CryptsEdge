@@ -5,7 +5,7 @@
 class Enemy {
     protected:
         sf::Vector2f position, velocity;
-        float health, damageDealt;
+        float health, damageDealt, width, height;
         int speed;
 
         sf::Texture texture;
@@ -22,6 +22,8 @@ class Enemy {
 
     public:
         Enemy(float health, float damage, int speed, sf::Vector2f startPosition);
+
+        float getDamageDealt() const;
 
         virtual ~Enemy() = default;
 

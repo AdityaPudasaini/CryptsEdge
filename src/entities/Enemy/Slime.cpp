@@ -4,20 +4,23 @@ std::vector<sf::Texture> Slime::frames;
 bool Slime::loaded = false;
 
 Slime::Slime(sf::Vector2f position) : Enemy(50.f, 10.f, 4, position){
+    width = 64.f;
+    height = 64.f;
+
     if(!loaded) {
         
         for(int i = 0; i < 30; i++) {
 
             if(i < 10) {
                 frames.emplace_back();
-                if(!frames.back().loadFromFile("./assets/sprites/enemies/Slimes/SlimeGreen/SlimeBasic_000" + std::to_string(i))) {
+                if(!frames.back().loadFromFile("./assets/sprites/enemies/Slimes/SlimeGreen/SlimeBasic_0000" + std::to_string(i) + ".png")) {
                     throw std::runtime_error("Fail to load texture");
                 }
             }
 
             else {
                 frames.emplace_back();
-                if(!frames.back().loadFromFile("./assets/sprites/enemies/Slimes/SlimeGreen/SlimeBasic_0000" + std::to_string(i))) {
+                if(!frames.back().loadFromFile("./assets/sprites/enemies/Slimes/SlimeGreen/SlimeBasic_000" + std::to_string(i) + ".png")) {
                     throw std::runtime_error("Fail to load texture");
                 }
             }
@@ -28,7 +31,7 @@ Slime::Slime(sf::Vector2f position) : Enemy(50.f, 10.f, 4, position){
 
     currentFrame = 0;
     sprite.emplace(frames[0]);
-    sprite->setScale({2.f, 2.f});
+    sprite->setScale({0.25f, 0.25f});
     sprite->setPosition(position);
 
 }
@@ -42,7 +45,7 @@ void Slime::update(sf::Vector2f playerPosition) {
         velocity.x = -speed;
     }
 
-    position.y = 912.f;
+    position.y = 848.f;
     position.x += velocity.x;
 
     if(position.y >= 912.f) {
@@ -63,19 +66,16 @@ void Slime::update(sf::Vector2f playerPosition) {
 }
 
 void Slime::draw(sf::RenderWindow& window) {
-    sprite->setOrigin({180.f / 2.f, 180.f / 2.f});
+    sprite->setOrigin({376.f / 2.f, 256.f / 2.f});
+    sprite->setPosition(position);
 
     if(velocity.x > 0) {
-        sprite->setScale({2.f, 2.f});
-        sprite->setPosition(position);
+        sprite->setScale({0.25f, 0.25f});
     } 
     
     if(velocity.x < 0) {
-        sprite->setScale({-2.f, 2.f});
-        sprite->setPosition({position.x, position.y});
+        sprite->setScale({-0.25f, 0.25f});
     }
 
-    sprite->setPosition(position);
     window.draw(*sprite);
-
 }

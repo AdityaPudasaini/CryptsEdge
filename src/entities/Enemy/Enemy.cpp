@@ -9,6 +9,10 @@ Enemy::Enemy(float health, float damage, int speed, sf::Vector2f startPosition) 
     this->currentState = AnimationState::Idle;
 }
 
+float Enemy::getDamageDealt() const {
+    return this->damageDealt;
+}
+
 void Enemy::takeDamage(float amount) {
     this->health -= amount;
 
@@ -18,7 +22,7 @@ void Enemy::takeDamage(float amount) {
 }
 
 sf::FloatRect Enemy::getHitbox() {
-    return sf::FloatRect({this->position.x, this->position.y}, {50, 50});
+    return sf::FloatRect({position.x - width/2.f, position.y - height/2.f}, {width, height});
 }
 
 bool Enemy::isAlive() {
