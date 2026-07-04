@@ -9,6 +9,16 @@ Player::Player() {
     currentState = AnimationState::Idle;
     currentFrameIndex = 0;
     isAttacking = false;
+    isInvincible = false;
+
+    frameDuration[AnimationState::Hurt] = 0.18f;
+    frameDuration[AnimationState::Idle] = 0.1f;
+    frameDuration[AnimationState::Running] = 0.08f;
+    frameDuration[AnimationState::Attacking1] = 0.07f;
+    frameDuration[AnimationState::Attacking2] = 0.07f;
+    frameDuration[AnimationState::Dead] = 0.15f;
+    frameDuration[AnimationState::Jumping] = 0.1f;
+    frameDuration[AnimationState::Falling] = 0.1f;
 
     if(!textures[AnimationState::Idle].loadFromFile("./assets/sprites/player/hero_knight/Idle.png")) {
         throw std::runtime_error("Failed to load texture for idle");
@@ -65,20 +75,42 @@ float Player::getHealth() const {
 void Player::handleInput() {
     if(!isAttacking) {
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
-            velocity.x = -10.f;
             isFacingRight = false;
+
+            if(currentState == AnimationState::Hurt) { 
+                velocity.x = 0.f; 
+                return; 
+            }
+
+            velocity.x = -10.f;
             currentState =  AnimationState::Running;
         }
 
         else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
-            velocity.x = 10.f;
             isFacingRight = true;
+
+            if(currentState == AnimationState::Hurt) { 
+                velocity.x = 0.f; 
+                return; 
+            }
+            
+            velocity.x = 10.f;
             currentState =  AnimationState::Running;
         }
 
         else{
-            velocity.x = 0.f;
-            currentState =  AnimationState::Idle;
+            if(currentState == AnimationState::Hurt) {
+                velocity.x = 0.f;
+            }
+
+            else if(currentState == AnimationState::Dead) {
+                velocity.x = 0.f;
+            }
+
+            else {
+                velocity.x = 0.f;
+                currentState =  AnimationState::Idle;
+            }
         }
     }
 
@@ -138,13 +170,17 @@ void Player::updatePosition(float timePassed) {
 void Player::updateAnimation() {
     sprite->setTexture(textures[currentState]);
 
-    if(animationClock.getElapsedTime().asSeconds() >= 0.1f) {
+    if(animationClock.getElapsedTime().asSeconds() >= frameDuration[currentState]) {
         currentFrameIndex++;    
         animationClock.restart();
 
         if(currentFrameIndex >= totalFrames[currentState]) {
             currentFrameIndex = 0;
             isAttacking = false;    
+
+            if(currentState ==  AnimationState::Hurt) {
+                currentState = AnimationState::Idle;
+            }
         }
 
         sprite->setTextureRect(sf::IntRect({currentFrameIndex * 180, 0}, {180, 180}));
@@ -156,15 +192,21 @@ sf::FloatRect Player::getHitbox() {
 }
 
 void Player::damageTaken(float damageAmount) {
-    if(damageClock.getElapsedTime().asSeconds() >= 0.5f) {
+    if(!isInvincible) {
         health -= damageAmount;
         currentState = AnimationState::Hurt;
+        std::cout << "Current State: " << (int)currentState << std::endl;
 
         if(health <= 0) {
             currentState = AnimationState::Dead;
         }
 
+        isInvincible = true;
         damageClock.restart();
+    }
+
+    if(damageClock.getElapsedTime().asSeconds() >= 1.f) {
+        isInvincible = false;
     }
 }
 

@@ -10,7 +10,7 @@ class Player
     private:
         sf::Vector2f position, velocity;
         float health;
-        bool isOnGround, isFacingRight, isAttacking;
+        bool isOnGround, isFacingRight, isAttacking, isInvincible;
         sf::Clock meleeClock, rangedClock, animationClock, damageClock ;
         int currentFrameIndex;
 
@@ -28,6 +28,7 @@ class Player
         AnimationState currentState;
 
         std::map<AnimationState, sf::Texture> textures;
+        std::map<AnimationState, float> frameDuration;
         std::map<AnimationState, int> totalFrames;
         std::optional<sf::Sprite> sprite;
 

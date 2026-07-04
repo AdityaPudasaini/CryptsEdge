@@ -45,10 +45,10 @@ void Slime::update(sf::Vector2f playerPosition) {
         velocity.x = -speed;
     }
 
-    position.y = 848.f;
+    position.y = 912.f;
     position.x += velocity.x;
 
-    if(position.y >= 912.f) {
+    if(position.y = 912.f) {
         position.y = 912.f;
         velocity.y = 0.f;
     }

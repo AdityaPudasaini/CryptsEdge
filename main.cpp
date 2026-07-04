@@ -27,18 +27,13 @@ int main() {
 
         player.handleInput();
         player.updatePosition(timePassed);
-        player.updateAnimation();
         slime.update(player.getPosition());
 
-        auto playerHB = player.getHitbox();
-auto slimeHB = slime.getHitbox();
-std::cout << "Player: " << playerHB.position.x << "," << playerHB.position.y 
-          << " size: " << playerHB.size.x << "," << playerHB.size.y << std::endl;
-std::cout << "Slime: " << slimeHB.position.x << "," << slimeHB.position.y 
-          << " size: " << slimeHB.size.x << "," << slimeHB.size.y << std::endl;
         if(player.getHitbox().findIntersection(slime.getHitbox())){
             player.damageTaken(slime.getDamageDealt());
         }
+
+        player.updateAnimation();
 
         window.clear(sf::Color(15, 10, 25));
         room.draw(window);
@@ -46,6 +41,10 @@ std::cout << "Slime: " << slimeHB.position.x << "," << slimeHB.position.y
         player.draw(window);
         slime.draw(window);
         window.display();
+
+        if(player.getHealth() <= 0.0) {
+            window.close();
+        }
     }
     
     return 0;
