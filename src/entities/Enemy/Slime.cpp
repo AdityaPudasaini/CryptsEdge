@@ -4,8 +4,10 @@ std::vector<sf::Texture> Slime::frames;
 bool Slime::loaded = false;
 
 Slime::Slime(sf::Vector2f position) : Enemy(50.f, 10.f, 4, position){
-    width = 64.f;
+    width = 94.f;
     height = 64.f;
+    isStunned = false;
+    hasBeenHit = false;
 
     if(!loaded) {
         
@@ -37,6 +39,16 @@ Slime::Slime(sf::Vector2f position) : Enemy(50.f, 10.f, 4, position){
 }
 
 void Slime::update(sf::Vector2f playerPosition) {
+
+    if(isStunned) {
+
+        if(stunClock.getElapsedTime().asSeconds() >= 0.5f) {
+            isStunned = false;
+        }
+
+        return;
+    }
+
     if(playerPosition.x > position.x) {
         velocity.x = speed;
     }
@@ -65,6 +77,11 @@ void Slime::update(sf::Vector2f playerPosition) {
     sprite->setTexture(frames[currentFrame]);
 }
 
+void Slime::stun() { 
+    isStunned = true; 
+    stunClock.restart(); 
+}
+
 void Slime::draw(sf::RenderWindow& window) {
     sprite->setOrigin({376.f / 2.f, 256.f / 2.f});
     sprite->setPosition(position);
@@ -78,4 +95,12 @@ void Slime::draw(sf::RenderWindow& window) {
     }
 
     window.draw(*sprite);
+}
+
+sf::FloatRect Slime::getHitbox() {
+    return sf::FloatRect({position.x - width/2.f, position.y - height/2.f}, {width, height});
+}
+
+bool Slime::getIsStunned() const {
+    return isStunned;
 }

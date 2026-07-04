@@ -27,10 +27,20 @@ int main() {
 
         player.handleInput();
         player.updatePosition(timePassed);
-        slime.update(player.getPosition());
 
-        if(player.getHitbox().findIntersection(slime.getHitbox())){
-            player.damageTaken(slime.getDamageDealt());
+        if(slime.isAlive()) {
+            slime.update(player.getPosition());
+
+            if(player.getHitbox().findIntersection(slime.getHitbox())) {
+                player.damageTaken(slime.getDamageDealt());
+            }
+
+            if(player.getIsAttacking() && player.getAttackHitbox().findIntersection(slime.getHitbox())) {
+                if(!slime.getIsStunned()) {
+                    slime.takeDamage(player.getDamageDealt());
+                    slime.stun();
+                }
+            }
         }
 
         player.updateAnimation();
@@ -39,12 +49,27 @@ int main() {
         room.draw(window);
         room.update();
         player.draw(window);
-        slime.draw(window);
-        window.display();
 
-        if(player.getHealth() <= 0.0) {
+        if(slime.isAlive()) {
+            slime.draw(window);
+        }
+
+        if(player.getHealth() <= 0.f) {
             window.close();
         }
+
+        // Debug hitboxes - remove later
+        sf::RectangleShape attackRect(player.getAttackHitbox().size);
+        attackRect.setPosition(player.getAttackHitbox().position);
+        attackRect.setFillColor(sf::Color(255, 0, 0, 100));
+        window.draw(attackRect);
+
+        sf::RectangleShape slimeRect(slime.getHitbox().size);
+        slimeRect.setPosition(slime.getHitbox().position);
+        slimeRect.setFillColor(sf::Color(0, 255, 0, 100));
+        window.draw(slimeRect);
+
+        window.display();
     }
     
     return 0;

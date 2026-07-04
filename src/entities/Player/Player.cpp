@@ -10,6 +10,7 @@ Player::Player() {
     currentFrameIndex = 0;
     isAttacking = false;
     isInvincible = false;
+    damageDealt = 25.f;
 
     frameDuration[AnimationState::Hurt] = 0.18f;
     frameDuration[AnimationState::Idle] = 0.1f;
@@ -70,6 +71,14 @@ sf::Vector2f Player::getPosition() const{
 }
 float Player::getHealth() const {
     return this->health;
+}
+
+float Player::getDamageDealt() const {
+    return this->damageDealt;
+}
+
+bool Player::getIsAttacking() const {
+    return isAttacking;
 }
 
 void Player::handleInput() {
@@ -189,6 +198,16 @@ void Player::updateAnimation() {
 
 sf::FloatRect Player::getHitbox() {
     return sf::FloatRect({position.x - 75.f, position.y - 100.f}, {150.f, 200.f});
+}
+
+sf::FloatRect Player::getAttackHitbox() {
+    if(!isAttacking) return sf::FloatRect({0,0}, {0,0});
+
+    if(isFacingRight) {
+        return sf::FloatRect({position.x + 40.f, position.y - 60.f}, {60.f, 60.f});
+    } else {
+        return sf::FloatRect({position.x - 100.f, position.y - 60.f}, {60.f, 60.f});
+    }
 }
 
 void Player::damageTaken(float damageAmount) {

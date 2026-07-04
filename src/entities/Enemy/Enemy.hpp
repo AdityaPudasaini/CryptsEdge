@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <optional>
+#include <iostream>
 
 class Enemy {
     protected:
@@ -33,7 +34,7 @@ class Enemy {
 
         void takeDamage(float amount);
 
-        sf::FloatRect getHitbox();
+        virtual sf::FloatRect getHitbox();
 
         bool isAlive();
 };

@@ -9,9 +9,9 @@ class Player
 {
     private:
         sf::Vector2f position, velocity;
-        float health;
+        float health, damageDealt;
         bool isOnGround, isFacingRight, isAttacking, isInvincible;
-        sf::Clock meleeClock, rangedClock, animationClock, damageClock ;
+        sf::Clock meleeClock, rangedClock, animationClock, damageClock;
         int currentFrameIndex;
 
         enum class AnimationState {
@@ -38,7 +38,12 @@ class Player
         ~Player();
 
         sf::Vector2f getPosition() const;
+
         float getHealth() const;
+
+        float getDamageDealt() const;
+
+        bool getIsAttacking() const;
 
         void handleInput();
 
@@ -57,4 +62,6 @@ class Player
         void draw(sf::RenderWindow& window);
 
         sf::FloatRect getHitbox();
+
+        sf::FloatRect getAttackHitbox();
 };

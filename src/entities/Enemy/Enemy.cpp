@@ -15,6 +15,7 @@ float Enemy::getDamageDealt() const {
 
 void Enemy::takeDamage(float amount) {
     this->health -= amount;
+    std::cout << "Enemy HP: " << this->health << std::endl;
 
     if(this->health <= 0) {
         this->currentState = AnimationState::Dead;
