@@ -58,7 +58,7 @@ int main() {
             window.close();
         }
 
-        // Debug hitboxes - remove later
+        /*
         sf::RectangleShape attackRect(player.getAttackHitbox().size);
         attackRect.setPosition(player.getAttackHitbox().position);
         attackRect.setFillColor(sf::Color(255, 0, 0, 100));
@@ -68,6 +68,7 @@ int main() {
         slimeRect.setPosition(slime.getHitbox().position);
         slimeRect.setFillColor(sf::Color(0, 255, 0, 100));
         window.draw(slimeRect);
+        */
 
         window.display();
     }
